@@ -1,11 +1,11 @@
 %global _without_tests 1
 %global modname six
-%global build_wheel 1
+%global build_wheel 0
 
-%bcond_without tests
+%bcond_with tests
 
 %bcond_without python2
-%bcond_without python3
+%bcond_with python3
 
 %global python2_wheelname %{modname}-%{version}-py2.py3-none-any.whl
 %global python3_wheelname %python2_wheelname
@@ -125,7 +125,7 @@ py.test-3 -rfsxX test_six.py
 %files -n python2-%{modname}
 %license LICENSE
 %doc README.rst documentation/index.rst
-%{python2_sitelib}/%{modname}-*.dist-info/
+%{python2_sitelib}/%{modname}-*info/
 %{python2_sitelib}/%{modname}.py*
 %endif
 
