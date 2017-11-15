@@ -5,14 +5,13 @@
 
 %bcond_without python2
 %bcond_without python3
-%bcond_without platform_python
 
 %global python2_wheelname %{modname}-%{version}-py2.py3-none-any.whl
 %global python3_wheelname %python2_wheelname
 
 Name:           python-%{modname}
 Version:        1.11.0
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        Python 2 and 3 compatibility utilities
 
 License:        MIT
@@ -54,6 +53,7 @@ Python 2 version.
 %package -n python3-%{modname}
 Summary:        %{summary}
 %{?python_provide:%python_provide python3-%{modname}}
+Obsoletes:      platform-python-%{modname} < %{version}-%{release}
 BuildRequires:  python3-devel
 BuildRequires:  python3-setuptools
 
@@ -69,23 +69,6 @@ BuildRequires:  python%{python3_pkgversion}-wheel
 
 %description -n python3-%{modname} %{_description}
 Python 3 version.
-
-%endif
-
-
-%if %{with platform_python}
-%package -n platform-python-%{modname}
-Summary:        %{summary}
-BuildRequires:  platform-python-devel
-BuildRequires:  platform-python-setuptools
-
-%if %{with tests}
-BuildRequires:  platform-python-pytest
-BuildRequires:  platform-python-tkinter
-%endif
-
-%description -n platform-python-%{modname} %{_description}
-Platform-Python version.
 
 %endif
 
@@ -111,10 +94,6 @@ Platform-Python version.
 %endif
 %endif
 
-%if %{with platform_python}
-%platform_py_build
-%endif
-
 
 %install
 %if %{with python2}
@@ -133,16 +112,11 @@ Platform-Python version.
 %endif
 %endif
 
-%if %{with platform_python}
-%platform_py_install
-%endif
-
 
 %if %{with tests}
 %check
 py.test-2 -rfsxX test_six.py
 py.test-3 -rfsxX test_six.py
-%{__platform_python} -m pytest -rfsxX test_six.py
 %endif
 
 
@@ -163,16 +137,11 @@ py.test-3 -rfsxX test_six.py
 %{python3_sitelib}/__pycache__/%{modname}.*
 %endif
 
-%if %{with platform_python}
-%files -n platform-python-%{modname}
-%license LICENSE
-%doc README.rst documentation/index.rst
-%{platform_python_sitelib}/%{modname}-*.egg-info/
-%{platform_python_sitelib}/%{modname}.py
-%{platform_python_sitelib}/__pycache__/%{modname}.*
-%endif
 
 %changelog
+* Wed Nov 15 2017 Lumír Balhar <lbalhar@redhat.com> - 1.11.0-2
+- Removed and obsoleted the platform-python subpackage
+
 * Tue Sep 19 2017 Charalampos Stratakis <cstratak@redhat.com> - 1.11.0-1
 - Update to 1.11.0
 
