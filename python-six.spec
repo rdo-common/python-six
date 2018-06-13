@@ -1,3 +1,4 @@
+%global _without_tests 1
 %global modname six
 %global build_wheel 1
 
@@ -11,7 +12,7 @@
 
 Name:           python-%{modname}
 Version:        1.11.0
-Release:        3%{?dist}
+Release:        4%{?dist}
 Summary:        Python 2 and 3 compatibility utilities
 
 License:        MIT
@@ -139,6 +140,9 @@ py.test-3 -rfsxX test_six.py
 
 
 %changelog
+* Wed Jun 13 2018 Miro Hrončok <mhroncok@redhat.com> - 1.11.0-4
+- Bootstrap for Python 3.7
+
 * Fri Feb 09 2018 Fedora Release Engineering <releng@fedoraproject.org> - 1.11.0-3
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_28_Mass_Rebuild
 
