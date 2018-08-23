@@ -1,5 +1,5 @@
 %global modname six
-%global build_wheel 1
+%bcond_without wheel
 
 %bcond_without tests
 
@@ -38,7 +38,7 @@ BuildRequires:  python2-pytest
 BuildRequires:  python2-tkinter
 %endif
 
-%if 0%{?build_wheel}
+%if %{with wheel}
 BuildRequires:  python2-pip
 BuildRequires:  python2-wheel
 %endif
@@ -62,7 +62,7 @@ BuildRequires:  python3-pytest
 BuildRequires:  python3-tkinter
 %endif
 
-%if 0%{?build_wheel}
+%if %{with wheel}
 BuildRequires:  python%{python3_pkgversion}-pip
 BuildRequires:  python%{python3_pkgversion}-wheel
 %endif
@@ -79,7 +79,7 @@ Python 3 version.
 
 %build
 %if %{with python2}
-%if 0%{?build_wheel}
+%if %{with wheel}
 %py2_build_wheel
 %else
 %py2_build
@@ -87,7 +87,7 @@ Python 3 version.
 %endif
 
 %if %{with python3}
-%if 0%{?build_wheel}
+%if %{with wheel}
 %py3_build_wheel
 %else
 %py3_build
@@ -97,7 +97,7 @@ Python 3 version.
 
 %install
 %if %{with python2}
-%if 0%{?build_wheel}
+%if %{with wheel}
 %py2_install_wheel %{python2_wheelname}
 %else
 %py2_install
@@ -105,7 +105,7 @@ Python 3 version.
 %endif
 
 %if %{with python3}
-%if 0%{?build_wheel}
+%if %{with wheel}
 %py3_install_wheel %{python3_wheelname}
 %else
 %py3_install
