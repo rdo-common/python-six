@@ -10,8 +10,8 @@
 %global python3_wheelname %python2_wheelname
 
 Name:           python-%{modname}
-Version:        1.11.0
-Release:        7%{?dist}
+Version:        1.12.0
+Release:        1%{?dist}
 Summary:        Python 2 and 3 compatibility utilities
 
 License:        MIT
@@ -115,6 +115,8 @@ Python 3 version.
 
 %if %{with tests}
 %check
+# Ensure six module is used from the version being build
+export PYTHONPATH=.
 py.test-2 -rfsxX test_six.py
 py.test-3 -rfsxX test_six.py
 %endif
@@ -139,6 +141,9 @@ py.test-3 -rfsxX test_six.py
 
 
 %changelog
+* Wed Feb 13 2019 Yatin Karel <ykarel@redhat.com> - 1.12.0-1
+- Update to 1.12.0
+
 * Sat Feb 02 2019 Fedora Release Engineering <releng@fedoraproject.org> - 1.11.0-7
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_30_Mass_Rebuild
 
