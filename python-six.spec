@@ -115,10 +115,9 @@ Python 3 version.
 
 %if %{with tests}
 %check
-# Ensure six module is used from the version being build
-export PYTHONPATH=.
-py.test-2 -rfsxX test_six.py
-py.test-3 -rfsxX test_six.py
+# Ensure six module is used from the version being installed
+PYTHONPATH=%{buildroot}%{python2_sitelib} py.test-2 -rfsxX test_six.py
+PYTHONPATH=%{buildroot}%{python3_sitelib} py.test-3 -rfsxX test_six.py
 %endif
 
 
