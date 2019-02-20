@@ -1,10 +1,15 @@
 %global modname six
-%bcond_without wheel
 
+%if 0%{?fedora} || 0%{?rhel} > 7
 %bcond_without tests
-
-%bcond_without python2
 %bcond_without python3
+%else
+%bcond_with tests
+%bcond_with python3
+%endif
+
+%bcond_with wheel
+%bcond_without python2
 
 %global python2_wheelname %{modname}-%{version}-py2.py3-none-any.whl
 %global python3_wheelname %python2_wheelname
@@ -125,7 +130,7 @@ PYTHONPATH=%{buildroot}%{python3_sitelib} py.test-3 -rfsxX test_six.py
 %files -n python2-%{modname}
 %license LICENSE
 %doc README.rst documentation/index.rst
-%{python2_sitelib}/%{modname}-*.dist-info/
+%{python2_sitelib}/%{modname}-*info/
 %{python2_sitelib}/%{modname}.py*
 %endif
 
@@ -133,7 +138,7 @@ PYTHONPATH=%{buildroot}%{python3_sitelib} py.test-3 -rfsxX test_six.py
 %files -n python3-%{modname}
 %license LICENSE
 %doc README.rst documentation/index.rst
-%{python3_sitelib}/%{modname}-*.dist-info/
+%{python3_sitelib}/%{modname}-*info/
 %{python3_sitelib}/%{modname}.py
 %{python3_sitelib}/__pycache__/%{modname}.*
 %endif
